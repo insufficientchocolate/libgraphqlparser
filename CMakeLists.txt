@@ -1,6 +1,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(libgraphqlparser C CXX)
 
+OPTION(BUILD_PYTHON_API off)
+
 SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
 INCLUDE(version)
@@ -104,8 +106,9 @@ GENERATE_AST_FILE(c_visitor_impl c/GraphQLAstForEachConcreteType.h)
 GENERATE_AST_FILE(cxx_json_visitor_header JsonVisitor.h.inc)
 
 GENERATE_AST_FILE(cxx_json_visitor_impl JsonVisitor.cpp.inc)
-
-ADD_SUBDIRECTORY(python)
+IF(BUILD_PYTHON_API)
+  ADD_SUBDIRECTORY(python)
+ENDIF()
 
 OPTION(test "Build tests." OFF)
 
